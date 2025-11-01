@@ -6,19 +6,28 @@ from config.config import CONFIG
 
 
 class FileIOService:
-    def __init__(self, file_io_type: str):
+    def __init__(
+        self,
+        file_io_type: str,
+    ):
         self.logger = logging.getLogger('google_photos_helper')
         self.file_io_type = file_io_type
         self.files_directory = f"{file_io_type}s"
         if not os.path.exists(self.files_directory):
             Path(self.files_directory).mkdir(parents=True, exist_ok=True)
 
-    def read(self, file_path: str):
+    def read(
+        self,
+        file_path: str,
+    ):
         with io.open(f"{self.files_directory}/{file_path}", "r", encoding="utf8") as f:
             contents = f.read()
             return contents
 
-    def save(self, files_paths: {}):
+    def save(
+        self,
+        files_paths: {}, # TODO: Fixt type
+    ):
         for space, files_types in files_paths.items():
             for file_type, paths in files_types.items():
                 lines = []

@@ -18,7 +18,10 @@ def main():
     #     print(i['filename'], "-", i['productUrl'])
 
     google_photos_helper = GooglePhotosHelper()
-    google_photos_helper.delete_photos()
+    google_photos_helper.delete_photos(
+        is_shared=False,
+        is_in_album=False,
+    )
 
 if __name__ == '__main__':
     main()

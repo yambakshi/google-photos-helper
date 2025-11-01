@@ -1,18 +1,15 @@
+import os
 import logging
-from utils.google_photos import init_drive
+from utils.google_photos import init_photos_library
 
-# from google_auth_oauthlib.flow import InstalledAppFlow
-# from googleapiclient.discovery import build
-# import pickle
-# import os
-
-# Scopes define access level; this one allows read-only access to your photos library
-# SCOPES = ['https://www.googleapis.com/auth/photoslibrary.readonly']
 
 class GooglePhotosService:
-    def __init__(self, cache_service):
+    def __init__(
+        self,
+        cache_service
+    ):
         self.logger = logging.getLogger('google_photos_helper')
-        # self.drive = init_drive()
+        self.init_photos_library = init_photos_library()
         self.cache_service = cache_service
 
     def scan(
@@ -21,23 +18,12 @@ class GooglePhotosService:
         is_in_album: bool,
         is_load_cache: bool,
     ):
-        pass
-
-    # def get_service(self):
-    #     creds = None
-    #     if os.path.exists('token.pickle'):
-    #         with open('token.pickle', 'rb') as token:
-    #             creds = pickle.load(token)
-
-    #     if not creds:
-    #         flow = InstalledAppFlow.from_client_secrets_file('client_secret.json', SCOPES)
-    #         creds = flow.run_local_server(port=0)
-    #         with open('token.pickle', 'wb') as token:
-    #             pickle.dump(creds, token)
-
-    #     service = build('photoslibrary', 'v1', credentials=creds)
-
-    #     return service
+        if is_load_cache and os.path.isfile(f'caches/google-photos.cache'):
+            self.logger.debug('Loading photos from cache')
+        else:
+            self.logger.debug('Scanning photos')
+            photos = []
+            self.cache_service.save(photos)
 
     # def list_all_media(self, service):
     #     media_items = []

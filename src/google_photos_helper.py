@@ -18,12 +18,15 @@ class GooglePhotosHelper:
         is_in_album=False,
     ):
         try:
-            self.logger.debug('Deleting photos...')
+            self.logger.debug('Deleting photos')
             photos_to_delete = self.google_photos_service.scan(
                 is_shared=is_shared,
                 is_in_album=is_in_album,
                 is_load_cache=self.is_load_cache
             )
+
+            if not self.is_load_cache:
+                self.cache_service.save(photos_to_delete)
 
         except Exception as error:
             self.logger.exception(error)

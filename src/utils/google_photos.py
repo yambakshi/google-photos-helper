@@ -7,11 +7,11 @@ from google.auth.transport.requests import Request
 
 
 # If modifying these scopes, delete the file token.pickle.
-SCOPES = ['https://www.googleapis.com/auth/drive.readonly']
+SCOPES = ['https://www.googleapis.com/auth/photoslibrary.readonly']
 
-
-def init_drive():
+def init_photos_library():
     creds = None
+
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
@@ -27,9 +27,11 @@ def init_drive():
             flow = InstalledAppFlow.from_client_secrets_file(
                 'authentication/credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
+
         # Save the credentials for the next run
         with open('authentication/token.pickle', 'wb') as token:
             pickle.dump(creds, token)
 
-    drive = build('drive', 'v3', credentials=creds)
-    return drive
+    photos_library = build('photoslibrary', 'v1', credentials=creds)
+
+    return photos_library
