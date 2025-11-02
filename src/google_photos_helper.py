@@ -21,7 +21,7 @@ class GooglePhotosHelper:
 
             if self.is_load_cache:
                 self.logger.debug('Loading media items from cache')
-                media_items_to_delete = self.cache_service.read('caches/media-items.to-delete.cache')
+                media_items_to_delete = self.cache_service.read('caches/media-items.cache')
             else:
                 media_items_to_delete = self.google_photos_service.scan(
                     is_shared=is_shared,
