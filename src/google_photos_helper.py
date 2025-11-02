@@ -8,25 +8,27 @@ class GooglePhotosHelper:
 
         self.is_load_cache = False
         self.cache_service = CacheService()
-        self.google_photos_service = GooglePhotosService(
-            cache_service=self.cache_service
-        )
+        self.google_photos_service = GooglePhotosService()
 
-    def delete_photos(
+    def delete_media_items(
         self,
         is_shared=False,
         is_in_album=False,
     ):
         try:
-            self.logger.debug('Deleting photos')
-            photos_to_delete = self.google_photos_service.scan(
-                is_shared=is_shared,
-                is_in_album=is_in_album,
-                is_load_cache=self.is_load_cache
-            )
+            self.logger.debug('Deleting media items')
+            media_items_to_delete = []
 
-            if not self.is_load_cache:
-                self.cache_service.save(photos_to_delete)
+            if self.is_load_cache:
+                self.logger.debug('Loading media items from cache')
+                media_items_to_delete = self.cache_service.read('caches/media-items.to-delete.cache')
+            else:
+                media_items_to_delete = self.google_photos_service.scan(
+                    is_shared=is_shared,
+                    is_in_album=is_in_album,
+                )
+
+                self.cache_service.save(media_items_to_delete)
 
         except Exception as error:
             self.logger.exception(error)

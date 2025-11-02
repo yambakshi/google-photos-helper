@@ -1,5 +1,5 @@
 # Google Photos Helper
-Google Photos helper for actions that are not possible from the UI
+Google Photos helper for actions that are not possible in the UI
 
 ## Technologies
 - Python 3.14.0

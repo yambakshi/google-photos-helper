@@ -18,7 +18,7 @@ def main():
     #     print(i['filename'], "-", i['productUrl'])
 
     google_photos_helper = GooglePhotosHelper()
-    google_photos_helper.delete_photos(
+    google_photos_helper.delete_media_items(
         is_shared=False,
         is_in_album=False,
     )
